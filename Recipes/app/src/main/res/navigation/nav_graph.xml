@@ -38,5 +38,13 @@
     <fragment
         android:id="@+id/detailsFragment"
         android:name="hu.bme.aut.android.recipes.DetailsFragment"
-        android:label="DetailsFragment" />
+        android:label="DetailsFragment" >
+        <argument android:name="recipeTitle"
+            app:argType="string" />
+        <argument android:name="recipeCategory"
+            app:argType="string" />
+        <argument android:name="recipeContent"
+            app:argType="string" />
+
+    </fragment>
 </navigation>

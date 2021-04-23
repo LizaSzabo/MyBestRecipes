@@ -14,7 +14,7 @@ class RvAdapter : RecyclerView.Adapter<RvAdapter.RecipeViewHolder>()  {
      var itemClickListener: RecipeItemClickListener? = null
 
     private val recipesList = mutableListOf<Recipe>(
-        Recipe("recipe1", "category", true, "aaaaaaaaa"),
+        Recipe("recipe1", "category", true, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
         Recipe("recipe2", "category1", true, "aaaaaaaaa"),
         Recipe("recipe3", "category1", true, "aaaaaaaaa"))
 
@@ -36,6 +36,20 @@ class RvAdapter : RecyclerView.Adapter<RvAdapter.RecipeViewHolder>()  {
                 view.setBackgroundResource(R.drawable.clicked_recipe_item_background)
                 recipe?.let { itemClickListener?.onItemLongClick(adapterPosition, view, it) }
                 true
+            }
+
+            favouriteImageView.setOnClickListener{
+                when(recipe?.favourite){
+                    false-> {
+                        favouriteImageView.setImageResource(R.drawable.ic_baseline_star_rate_24)
+                        recipe?.favourite = true
+                    }
+                    true ->{
+                        favouriteImageView.setImageResource(R.drawable.ic_baseline_star_border_24)
+                        recipe?.favourite = false
+                    }
+
+                }
             }
         }
 
@@ -76,7 +90,13 @@ class RvAdapter : RecyclerView.Adapter<RvAdapter.RecipeViewHolder>()  {
         notifyDataSetChanged()
     }
 
-    fun editRecipe(recipe: Recipe){
+    fun editRecipe(recipe: Recipe, pos: Int){
+        recipesList[pos] = recipe
+        notifyDataSetChanged()
+    }
 
+    fun addRecipe(newRecipe: Recipe){
+        recipesList.add(newRecipe)
+        notifyItemChanged(recipesList.size)
     }
 }
