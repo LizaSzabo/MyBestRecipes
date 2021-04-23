@@ -30,5 +30,13 @@
     <fragment
         android:id="@+id/recipesFragment"
         android:name="hu.bme.aut.android.recipes.RecipesFragment"
-        android:label="RecipesFragment" />
+        android:label="RecipesFragment" >
+        <action
+            android:id="@+id/action_recipesFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="hu.bme.aut.android.recipes.DetailsFragment"
+        android:label="DetailsFragment" />
 </navigation>
