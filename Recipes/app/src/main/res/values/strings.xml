@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">Recipes</string>
+
+    <string-array name="categories">
+        <item>Breakfast</item>
+        <item>Lunch</item>
+        <item>Beverage</item>
+        <item>Appetizer</item>
+        <item>Soup</item>
+        <item>Main dish: Beef</item>
+        <item>Main dish: Poultry</item>
+        <item>Main dish: Pork</item>
+        <item>Main dish: Seafood</item>
+        <item>Main dish: Vegetarian</item>
+        <item>Side dish: Vegetables</item>
+        <item>Side dish: Other</item>
+        <item>Dessert</item>
+        <item>Canning / Freezing</item>
+        <item>Bread</item>
+        <item>Holidays</item>
+        <item>Entertaining</item>
+    </string-array>
 </resources>

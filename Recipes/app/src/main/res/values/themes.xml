@@ -11,11 +11,17 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="android:popupMenuStyle">@style/PopupMenu</item>
+        <item name="android:spinnerStyle">@style/spinner</item>
     </style>
 
 
     <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
         <item name="android:popupBackground">@drawable/menu_background</item>
+    </style>
+
+    <style name = "spinner" parent="android:Widget.TextView.SpinnerItem">
+        <item name="colorPrimary">#4C296A</item>
+        <item name = "boxBackgroundColor">#4C296A</item>
     </style>
 
 
