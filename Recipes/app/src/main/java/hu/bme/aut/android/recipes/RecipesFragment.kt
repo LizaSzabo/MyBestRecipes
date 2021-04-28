@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.fragment.app.Fragment
@@ -14,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import hu.bme.aut.android.recipes.Model.Recipe
 import hu.bme.aut.android.recipes.databinding.FragmentRecipesBinding
 
-class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipeDialog.EditRecipeListener, AddNewRecipeDialog.AddRecipeListener {
+class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipeDialog.EditRecipeListener, AddNewRecipeDialog.AddRecipeListener, DatePickerDialogFragment.OnDateSelectedListener  {
     private lateinit var fragmentBinding: FragmentRecipesBinding
     private lateinit var adapter : RvAdapter
 
@@ -34,7 +35,7 @@ class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipe
     }
 
     private fun setupRecyclerView(){
-        adapter = RvAdapter()
+        adapter = RvAdapter(parentFragmentManager)
         adapter.itemClickListener = this
         fragmentBinding.rvRecipes.layoutManager = LinearLayoutManager(context)
         fragmentBinding.rvRecipes.adapter = adapter
@@ -78,5 +79,11 @@ class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipe
     override fun onNewRecipe(recipe: Recipe) {
        adapter.addRecipe(recipe)
     }
+
+    override fun onDateSelected(year: Int, month: Int, day: Int, item: Recipe?) {
+        adapter.onDateSelected(year, month, day, item)
+    }
+
+
 
 }

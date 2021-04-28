@@ -28,7 +28,7 @@ class EditRecipeDialog(val pos: Int, val actualRecipeData: Recipe): DialogFragme
         }
 
         binding.btnSave.setOnClickListener{
-            val recipe = Recipe(binding.editTextRecipeTitle.text.toString(), binding.editTextRecipeCategory.text.toString(), false, "aaa")
+            val recipe = Recipe(binding.editTextRecipeTitle.text.toString(), binding.editTextRecipeCategory.text.toString(), false, "aaa", null)
             listener?.onRecipeEdited(recipe, pos)
             dismiss()
         }

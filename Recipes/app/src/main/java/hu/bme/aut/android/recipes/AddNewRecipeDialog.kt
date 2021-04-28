@@ -24,7 +24,7 @@ class AddNewRecipeDialog : DialogFragment(), AdapterView.OnItemSelectedListener 
         }
 
         binding.btnSave.setOnClickListener{
-            val recipe = Recipe(binding.editTextRecipeTitle.text.toString(), binding.editTextRecipeCategory.text.toString(), false, "aaa")
+            val recipe = Recipe(binding.editTextRecipeTitle.text.toString(), binding.editTextRecipeCategory.text.toString(), false, "aaa", null)
             addRecipeListener?.onNewRecipe(recipe)
             dismiss()
         }
