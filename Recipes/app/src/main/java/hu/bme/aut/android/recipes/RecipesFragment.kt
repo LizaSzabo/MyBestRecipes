@@ -1,14 +1,14 @@
 package hu.bme.aut.android.recipes
 
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import android.widget.TextView
 import android.widget.Toast
-import android.widget.Toast.LENGTH_LONG
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,7 +19,7 @@ class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipe
     private lateinit var fragmentBinding: FragmentRecipesBinding
     private lateinit var adapter : RvAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         fragmentBinding = FragmentRecipesBinding.inflate(inflater)
 
         fragmentBinding.addRecipe.setOnClickListener{
@@ -27,6 +27,9 @@ class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipe
             addRecipeDialog.addRecipeListener = this
             addRecipeDialog.show(parentFragmentManager, "")
         }
+
+        fragmentBinding.editTextSearch.doOnTextChanged { _, _, _, _ -> adapter.addAll(fragmentBinding.editTextSearch.text.toString())  }
+
         return fragmentBinding.root
     }
 
@@ -35,12 +38,12 @@ class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipe
     }
 
     private fun setupRecyclerView(){
-        adapter = RvAdapter(parentFragmentManager)
+        adapter = RvAdapter(parentFragmentManager, activity)
         adapter.itemClickListener = this
         fragmentBinding.rvRecipes.layoutManager = LinearLayoutManager(context)
         fragmentBinding.rvRecipes.adapter = adapter
         adapter.itemClickListener = this
-
+        adapter.addAll("")
     }
 
     override fun onItemClick(recipe: Recipe) {
@@ -53,7 +56,7 @@ class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipe
         val popup = PopupMenu(context, view)
         popup.inflate(R.menu.options_menu)
 
-        popup.setOnDismissListener(){
+        popup.setOnDismissListener {
             view.setBackgroundResource(R.drawable.recipe_item_background)
         }
         popup.setOnMenuItemClickListener { item ->
@@ -72,7 +75,6 @@ class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipe
     }
 
     override fun onRecipeEdited(recipe: Recipe, pos: Int) {
-        Toast.makeText(context, "aaaaaaaaaaaaaa", LENGTH_LONG)
         adapter.editRecipe(recipe, pos)
     }
 
@@ -85,5 +87,22 @@ class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipe
     }
 
 
-
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        when (requestCode) {
+            101 -> {
+                if (grantResults.isNotEmpty()
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                ) {
+                    Toast.makeText(activity, "Permissions granted", Toast.LENGTH_SHORT)
+                            .show()
+                } else {
+                    Toast.makeText(
+                            activity,
+                            "Permissions are NOT granted", Toast.LENGTH_SHORT
+                    ).show()
+                }
+                return
+            }
+        }
+    }
 }

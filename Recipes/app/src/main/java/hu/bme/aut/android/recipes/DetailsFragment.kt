@@ -6,9 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
-import hu.bme.aut.android.recipes.Model.Recipe
 import hu.bme.aut.android.recipes.databinding.FragmentDetailsBinding
-import hu.bme.aut.android.recipes.databinding.FragmentRecipesBinding
 
 class DetailsFragment : Fragment(){
     private lateinit var fragmentBinding: FragmentDetailsBinding

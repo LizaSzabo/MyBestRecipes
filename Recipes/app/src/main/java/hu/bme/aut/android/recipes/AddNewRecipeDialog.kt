@@ -10,7 +10,6 @@ import android.widget.Spinner
 import androidx.fragment.app.DialogFragment
 import hu.bme.aut.android.recipes.Model.Recipe
 import hu.bme.aut.android.recipes.databinding.DialogAddNewRecipeBinding
-import hu.bme.aut.android.recipes.databinding.DialogEditFragmentBinding
 
 class AddNewRecipeDialog : DialogFragment(), AdapterView.OnItemSelectedListener {
     private lateinit var binding: DialogAddNewRecipeBinding
@@ -24,8 +23,8 @@ class AddNewRecipeDialog : DialogFragment(), AdapterView.OnItemSelectedListener 
         }
 
         binding.btnSave.setOnClickListener{
-            val recipe = Recipe(binding.editTextRecipeTitle.text.toString(), binding.editTextRecipeCategory.text.toString(), false, "aaa", null)
-            addRecipeListener?.onNewRecipe(recipe)
+            val recipe = Recipe(binding.editTextRecipeTitle.text.toString(), binding.editTextRecipeCategory.text.toString(), false, "aaa", "add date..")
+            addRecipeListener.onNewRecipe(recipe)
             dismiss()
         }
 

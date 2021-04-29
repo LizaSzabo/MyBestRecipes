@@ -2,19 +2,14 @@ package hu.bme.aut.android.recipes
 
 import android.app.DatePickerDialog
 import android.app.Dialog
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.widget.DatePicker
-import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import hu.bme.aut.android.recipes.Model.Recipe
 import java.util.*
 
-class DatePickerDialogFragment(val item: Recipe?) : DialogFragment(), DatePickerDialog.OnDateSetListener{
+class DatePickerDialogFragment(private val item: Recipe?) : DialogFragment(), DatePickerDialog.OnDateSetListener{
    lateinit var onDateSelectedListener: OnDateSelectedListener
-
-
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val c = Calendar.getInstance()
