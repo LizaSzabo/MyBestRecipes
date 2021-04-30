@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "943903292887",
+    "project_id": "mybestrecipes-6ece5",
+    "storage_bucket": "mybestrecipes-6ece5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:943903292887:android:c0cd8c1ff09a5118cc1f92",
+        "android_client_info": {
+          "package_name": "hu.bme.aut.android.recipes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "943903292887-m78cg1of0eoqc07ut6qlpnjgd46s28le.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiq8ghjz_9bXSak_6T0amW_HPrV7vg87w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "943903292887-m78cg1of0eoqc07ut6qlpnjgd46s28le.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
