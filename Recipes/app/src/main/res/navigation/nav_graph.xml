@@ -45,6 +45,14 @@
             app:argType="string" />
         <argument android:name="recipeContent"
             app:argType="string" />
+        <argument android:name="recipeId"
+            app:argType="string" />
+        <argument android:name="recipeFavourite"
+            app:argType="boolean" />
+        <argument android:name="recipeDate"
+            app:argType="string" />
+        <argument android:name="pos"
+            app:argType="integer" />
 
     </fragment>
 </navigation>

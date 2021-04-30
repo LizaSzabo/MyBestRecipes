@@ -31,7 +31,7 @@ class EditRecipeDialog(private val pos: Int, private val actualRecipeData: Recip
         }
 
         binding.btnSave.setOnClickListener{
-            val recipe = Recipe(binding.editTextRecipeTitle.text.toString(), binding.editTextRecipeCategory.text.toString(), false, "aaa", "add date..")
+            val recipe = Recipe(actualRecipeData.id, binding.editTextRecipeTitle.text.toString(), binding.editTextRecipeCategory.text.toString(), actualRecipeData.favourite, actualRecipeData.content, actualRecipeData.date)
             updateRecipe(recipe)
             listener.onRecipeEdited(recipe, pos)
 
@@ -94,9 +94,7 @@ class EditRecipeDialog(private val pos: Int, private val actualRecipeData: Recip
 
         val db = Firebase.firestore
 
-        db.collection("recipes").document(actualRecipeData.title.toString()).delete()
-        db.collection("recipes").document(recipe.title.toString()).set(recipe)
+        db.collection("recipes").document(actualRecipeData.id.toString()).update( "title", recipe.title)
+        db.collection("recipes").document(actualRecipeData.id.toString()).update( "category", recipe.category)
     }
-
-
 }

@@ -16,6 +16,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import hu.bme.aut.android.recipes.Model.Recipe
 import hu.bme.aut.android.recipes.RecipeApplication.Companion.fullList
 import hu.bme.aut.android.recipes.databinding.RecipeItemBinding
@@ -39,7 +41,7 @@ class RvAdapter(private val fragmentManager: FragmentManager, private  val activ
         init{
             itemView.setOnClickListener{
                 recipe?.let{
-                    itemClickListener?.onItemClick(it)
+                    itemClickListener?.onItemClick(it, adapterPosition)
                 }
             }
 
@@ -54,13 +56,17 @@ class RvAdapter(private val fragmentManager: FragmentManager, private  val activ
                     false-> {
                         favouriteImageView.setImageResource(R.drawable.ic_baseline_star_rate_24)
                         recipe?.favourite = true
+                        updateFavourite(recipe, true)
                     }
                     true ->{
                         favouriteImageView.setImageResource(R.drawable.ic_baseline_star_border_24)
                         recipe?.favourite = false
+                        updateFavourite(recipe, false)
                     }
 
                 }
+
+
             }
 
            dateTextView.setOnClickListener{
@@ -73,7 +79,7 @@ class RvAdapter(private val fragmentManager: FragmentManager, private  val activ
     }
 
     interface RecipeItemClickListener{
-        fun onItemClick(recipe: Recipe)
+        fun onItemClick(recipe: Recipe, pos: Int)
         fun onItemLongClick(pos: Int, view: View, recipe: Recipe)
     }
 
@@ -87,7 +93,12 @@ class RvAdapter(private val fragmentManager: FragmentManager, private  val activ
         holder.titleTextView.text = recipe?.title
         holder.categoryTextView.text = recipe?.category
         holder.dateTextView.text = recipe?.date
-      //  holder.favouriteImageView = recipe.f
+        if(recipe?.favourite == true){
+            holder.favouriteImageView.setImageResource(R.drawable.ic_baseline_star_rate_24)
+        }
+        else{
+            holder.favouriteImageView.setImageResource(R.drawable.ic_baseline_star_border_24)
+        }
     }
 
     override fun getItemCount() = recipesList.size
@@ -144,13 +155,13 @@ class RvAdapter(private val fragmentManager: FragmentManager, private  val activ
         }
         val dataAsString = "$year.$monthnulla$monthString.$nulla$day"
 
-       val recipe = item?.let { Recipe(item.title, item.category, item.favourite, it.content, dataAsString) }
+       val recipe = item?.let { Recipe(item.id, item.title, item.category, item.favourite, it.content, dataAsString) }
 
        if (recipe != null) {
            recipesList[pos] = recipe
        }
         notifyDataSetChanged()
-
+       updateRecipeDate(recipe)
        saveInCalendar(recipe, date)
     }
 
@@ -188,6 +199,17 @@ class RvAdapter(private val fragmentManager: FragmentManager, private  val activ
                         101)
             }
         }
+    }
+
+    private fun updateRecipeDate(recipe: Recipe?) {
+        val db = Firebase.firestore
+        db.collection("recipes").document(recipe?.id.toString()).update( "date", recipe?.date)
+    }
+
+
+    private fun updateFavourite(recipe: Recipe?, value: Boolean) {
+        val db = Firebase.firestore
+        db.collection("recipes").document(recipe?.id.toString()).update( "favourite", value)
     }
 
 }

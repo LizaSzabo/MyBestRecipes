@@ -5,6 +5,8 @@ import android.app.Dialog
 import android.os.Bundle
 import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import hu.bme.aut.android.recipes.Model.Recipe
 import java.util.*
 
@@ -21,9 +23,13 @@ class DatePickerDialogFragment(private val item: Recipe?) : DialogFragment(), Da
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         onDateSelectedListener.onDateSelected(year, month, dayOfMonth, item)
+
     }
 
     interface OnDateSelectedListener {
         fun onDateSelected(year: Int, month: Int, day: Int, item:Recipe?)
     }
+
+
+
 }

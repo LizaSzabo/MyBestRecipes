@@ -20,9 +20,9 @@ import hu.bme.aut.android.recipes.Model.Recipe
 import hu.bme.aut.android.recipes.RecipeApplication.Companion.fullList
 import hu.bme.aut.android.recipes.databinding.FragmentRecipesBinding
 
-class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipeDialog.EditRecipeListener, AddNewRecipeDialog.AddRecipeListener, DatePickerDialogFragment.OnDateSelectedListener  {
+class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipeDialog.EditRecipeListener, AddNewRecipeDialog.AddRecipeListener, DatePickerDialogFragment.OnDateSelectedListener {
     private lateinit var fragmentBinding: FragmentRecipesBinding
-    private lateinit var adapter : RvAdapter
+     lateinit var adapter : RvAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         fragmentBinding = FragmentRecipesBinding.inflate(inflater)
@@ -75,9 +75,8 @@ class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipe
         adapter.addAll("")
     }
 
-    override fun onItemClick(recipe: Recipe) {
-        Log.i("click", "click")
-        val action = recipe.title?.let { recipe.category?.let { it1 -> recipe.content?.let { it2 -> RecipesFragmentDirections.actionRecipesFragmentToDetailsFragment(it, it1, it2) } } }
+    override fun onItemClick(recipe: Recipe, pos: Int) {
+        val action = recipe.title?.let { recipe.category?.let { it1 -> recipe.content?.let { it2 -> recipe.id?.let { it3 -> recipe.favourite?.let { it4 -> recipe.date?.let { it5 -> RecipesFragmentDirections.actionRecipesFragmentToDetailsFragment( it, it1, it2, it3, it4, it5, pos) } } } } } }
         if (action != null) {
             findNavController().navigate(action)
         }
@@ -118,6 +117,7 @@ class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipe
 
     override fun onDateSelected(year: Int, month: Int, day: Int, item: Recipe?) {
         adapter.onDateSelected(year, month, day, item)
+
     }
 
 
@@ -144,10 +144,12 @@ class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipe
 
         val db = Firebase.firestore
 
-        db.collection("recipes").document(recipe.title.toString()).delete()
+        db.collection("recipes").document(recipe.id.toString()).delete()
                 .addOnSuccessListener {
                     // Toast.makeText(activity, "recipe created", LENGTH_LONG).show()
                 }
                 .addOnFailureListener { e -> Toast.makeText(activity, e.toString(), Toast.LENGTH_SHORT).show() }
     }
+
+
 }

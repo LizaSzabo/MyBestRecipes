@@ -15,6 +15,7 @@ import com.google.firebase.ktx.Firebase
 import hu.bme.aut.android.recipes.Model.Recipe
 import hu.bme.aut.android.recipes.RecipeApplication.Companion.fullList
 import hu.bme.aut.android.recipes.databinding.DialogAddNewRecipeBinding
+import java.util.*
 
 class AddNewRecipeDialog : DialogFragment(), AdapterView.OnItemSelectedListener {
     private lateinit var binding: DialogAddNewRecipeBinding
@@ -29,7 +30,8 @@ class AddNewRecipeDialog : DialogFragment(), AdapterView.OnItemSelectedListener 
 
         binding.btnSave.setOnClickListener{
             if (validateForm()) {
-                val recipe = Recipe(binding.editTextRecipeTitle.text.toString(), binding.editTextRecipeCategory.text.toString(), false, "aaa", "add date..")
+                val id = Random().nextInt(2000000000).toString()
+                val recipe = Recipe(id, binding.editTextRecipeTitle.text.toString(), binding.editTextRecipeCategory.text.toString(), true, "aaa", "add date..")
                 addRecipeListener.onNewRecipe(recipe)
 
                 uploadRecipe(recipe)
@@ -76,7 +78,8 @@ class AddNewRecipeDialog : DialogFragment(), AdapterView.OnItemSelectedListener 
              13 -> setSelectedItem("Canning / Freezing")
              14 -> setSelectedItem("Bread")
              15 -> setSelectedItem("Holidays")
-            else -> setSelectedItem("Entertaining")
+            16 -> setSelectedItem("Entertaining")
+             else ->  setSelectedItem("Entertaining")
         }
 
     }
@@ -96,7 +99,7 @@ class AddNewRecipeDialog : DialogFragment(), AdapterView.OnItemSelectedListener 
 
         val db = Firebase.firestore
 
-        db.collection("recipes").document(newRecipe.title.toString())
+        db.collection("recipes").document(newRecipe.id.toString())
                 .set(newRecipe)
                 .addOnSuccessListener {
                    // Toast.makeText(activity, "recipe created", LENGTH_LONG).show()
