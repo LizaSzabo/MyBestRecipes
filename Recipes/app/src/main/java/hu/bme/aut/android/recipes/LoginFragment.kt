@@ -35,24 +35,36 @@ class LoginFragment: BaseActivity() {
     }
 
     private fun loginClick() {
-     /*   if (!validateForm()) {
+        if (!validateForm()) {
             return
-        }*/
+        }
 
-        showProgressDialog()
+      //  showProgressDialog()
 
         firebaseAuth
             .signInWithEmailAndPassword(fragmentBinding.editTextTextEmailAddress.text.toString(), fragmentBinding.editTextTextPassword.text.toString())
             .addOnSuccessListener {
-                hideProgressDialog()
+             //   hideProgressDialog()
 
                 navigateToRecipes()
                // finish()
             }
             .addOnFailureListener { exception ->
-                hideProgressDialog()
+               // hideProgressDialog()
 
                 toast(exception.localizedMessage)
             }
+    }
+
+    private fun validateForm(): Boolean {
+        if (fragmentBinding.editTextTextEmailAddress.text.isEmpty()) {
+            fragmentBinding.editTextTextEmailAddress.error = "Required"
+            return false
+        }
+        if (fragmentBinding.editTextTextPassword.text.isEmpty()) {
+            fragmentBinding.editTextTextPassword.error = "Required"
+            return false
+        }
+        return true
     }
 }

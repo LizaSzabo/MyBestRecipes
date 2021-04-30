@@ -12,6 +12,10 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
 import hu.bme.aut.android.recipes.Model.Recipe
 import hu.bme.aut.android.recipes.databinding.FragmentRecipesBinding
 
@@ -30,7 +34,30 @@ class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipe
 
         fragmentBinding.editTextSearch.doOnTextChanged { _, _, _, _ -> adapter.addAll(fragmentBinding.editTextSearch.text.toString())  }
 
+        initRecipesListener()
         return fragmentBinding.root
+    }
+
+    private fun initRecipesListener() {
+        val db = Firebase.firestore
+        db.collection("recipes")
+            .addSnapshotListener { snapshots, e ->
+                if (e != null) {
+                    Toast.makeText(activity, e.toString(), Toast.LENGTH_SHORT).show()
+                    return@addSnapshotListener
+                }
+
+                for (dc in snapshots!!.documentChanges) {
+                    when (dc.type) {
+                        DocumentChange.Type.ADDED -> {
+                            adapter.addRecipe(dc.document.toObject())
+                            RecipeApplication.fullList.add(dc.document.toObject())
+                        }
+                        DocumentChange.Type.MODIFIED -> Toast.makeText(activity, dc.document.data.toString(), Toast.LENGTH_SHORT).show()
+                        DocumentChange.Type.REMOVED -> Toast.makeText(activity, dc.document.data.toString(), Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,8 +75,10 @@ class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipe
 
     override fun onItemClick(recipe: Recipe) {
         Log.i("click", "click")
-        val action = RecipesFragmentDirections.actionRecipesFragmentToDetailsFragment(recipe.title, recipe.category, recipe.content)
-        findNavController().navigate(action)
+        val action = recipe.title?.let { recipe.category?.let { it1 -> recipe.content?.let { it2 -> RecipesFragmentDirections.actionRecipesFragmentToDetailsFragment(it, it1, it2) } } }
+        if (action != null) {
+            findNavController().navigate(action)
+        }
     }
 
     override fun onItemLongClick(pos: Int, view: View, recipe: Recipe) {

@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import hu.bme.aut.android.recipes.Model.Recipe
+import hu.bme.aut.android.recipes.RecipeApplication.Companion.fullList
 import hu.bme.aut.android.recipes.databinding.RecipeItemBinding
 import java.util.*
 
@@ -24,12 +25,7 @@ class RvAdapter(private val fragmentManager: FragmentManager, private  val activ
      var itemClickListener: RecipeItemClickListener? = null
      val dateListener : DatePickerDialogFragment.OnDateSelectedListener = this
 
-    private val fullList = mutableListOf(
-            Recipe("recipe1", "category", true, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "2010-12-13"),
-            Recipe("recipe2", "soup", true, "aaaaaaaaa", "add date.."),
-            Recipe("recipe3", "category1", true, "aaaaaaaaa", "add date.."))
-
-    private val recipesList = mutableListOf<Recipe>()
+    private val recipesList = mutableListOf<Recipe?>()
 
     inner class RecipeViewHolder( binding: RecipeItemBinding) : RecyclerView.ViewHolder(binding.root){
         val titleTextView: TextView = binding.tvRecipeTitle
@@ -87,17 +83,19 @@ class RvAdapter(private val fragmentManager: FragmentManager, private  val activ
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
         val recipe = recipesList[position]
         holder.recipe = recipe
-        holder.titleTextView.text = recipe.title
-        holder.categoryTextView.text = recipe.category
-        holder.dateTextView.text = recipe.date
+        holder.titleTextView.text = recipe?.title
+        holder.categoryTextView.text = recipe?.category
+        holder.dateTextView.text = recipe?.date
       //  holder.favouriteImageView = recipe.f
     }
 
     override fun getItemCount() = recipesList.size
 
     fun addAll(category: String){
+
         if(category.isEmpty()) {
             recipesList.clear()
+            notifyDataSetChanged()
             for(r in fullList){
                     addRecipe(r)
             }
@@ -106,11 +104,13 @@ class RvAdapter(private val fragmentManager: FragmentManager, private  val activ
             recipesList.clear()
             notifyDataSetChanged()
             for(r in fullList){
-                if(r.category.contains(category, ignoreCase = true))
+                if(r?.category?.contains(category, ignoreCase = true)!!)
                   addRecipe(r)
             }
         }
     }
+
+
 
     fun deleteRecipe(pos: Int){
         recipesList.removeAt(pos)
@@ -122,8 +122,9 @@ class RvAdapter(private val fragmentManager: FragmentManager, private  val activ
         notifyDataSetChanged()
     }
 
-    fun addRecipe(newRecipe: Recipe){
+    fun addRecipe(newRecipe: Recipe?){
         recipesList.add(newRecipe)
+        newRecipe?.title?.let { Log.i("add", it) }
         notifyItemChanged(recipesList.size)
     }
 

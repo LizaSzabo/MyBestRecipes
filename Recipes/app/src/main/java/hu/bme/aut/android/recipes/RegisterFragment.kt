@@ -19,9 +19,6 @@ class RegisterFragment: BaseActivity() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         fragmentBinding = FragmentRegisterBinding.inflate(inflater, container, false)
 
-
-        fragmentBinding.btnRegister.setOnClickListener{ navigateToLogin()}
-
         firebaseAuth = FirebaseAuth.getInstance()
         fragmentBinding.btnRegister.setOnClickListener{
             registerClick()
@@ -36,12 +33,15 @@ class RegisterFragment: BaseActivity() {
 
     private fun registerClick() {
 
-        showProgressDialog()
+        if (!validateForm()) {
+            return
+        }
+     //   showProgressDialog()
 
         firebaseAuth
                 .createUserWithEmailAndPassword(fragmentBinding.editTextTextEmailAddress.text.toString(), fragmentBinding.editTextTextPassword.text.toString())
                 .addOnSuccessListener { result ->
-                    hideProgressDialog()
+                   // hideProgressDialog()
 
                     val firebaseUser = result.user
                     val profileChangeRequest = UserProfileChangeRequest.Builder()
@@ -50,11 +50,33 @@ class RegisterFragment: BaseActivity() {
                     firebaseUser?.updateProfile(profileChangeRequest)
 
                     toast("Registration successful")
+                    navigateToLogin()
                 }
                 .addOnFailureListener { exception ->
-                    hideProgressDialog()
+                  //  hideProgressDialog()
 
                     toast(exception.message)
                 }
+    }
+
+
+    private fun validateForm(): Boolean {
+        if (fragmentBinding.editTextTextEmailAddress.text.isEmpty()) {
+            fragmentBinding.editTextTextEmailAddress.error = "Required"
+            return false
+        }
+        if (fragmentBinding.editTextTextPassword.text.isEmpty()) {
+            fragmentBinding.editTextTextPassword.error = "Required"
+            return false
+        }
+        if (fragmentBinding.editTextTextPassword2.text.isEmpty()) {
+            fragmentBinding.editTextTextPassword2.error = "Required"
+            return false
+        }
+        if (fragmentBinding.editTextTextPassword.text.toString() != fragmentBinding.editTextTextPassword2.text.toString()) {
+            fragmentBinding.editTextTextPassword.error = "Error password confirmation"
+            return false
+        }
+        return true
     }
 }
