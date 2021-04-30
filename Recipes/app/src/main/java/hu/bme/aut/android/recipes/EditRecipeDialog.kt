@@ -7,7 +7,10 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import hu.bme.aut.android.recipes.Model.Recipe
 import hu.bme.aut.android.recipes.databinding.DialogEditFragmentBinding
 
@@ -29,7 +32,9 @@ class EditRecipeDialog(private val pos: Int, private val actualRecipeData: Recip
 
         binding.btnSave.setOnClickListener{
             val recipe = Recipe(binding.editTextRecipeTitle.text.toString(), binding.editTextRecipeCategory.text.toString(), false, "aaa", "add date..")
+            updateRecipe(recipe)
             listener.onRecipeEdited(recipe, pos)
+
             dismiss()
         }
 
@@ -84,4 +89,14 @@ class EditRecipeDialog(private val pos: Int, private val actualRecipeData: Recip
      private fun setSelectedItem(categorySelected: String){
             binding.editTextRecipeCategory.setText(categorySelected)
         }
+
+    private fun updateRecipe(recipe: Recipe) {
+
+        val db = Firebase.firestore
+
+        db.collection("recipes").document(actualRecipeData.title.toString()).delete()
+        db.collection("recipes").document(recipe.title.toString()).set(recipe)
+    }
+
+
 }

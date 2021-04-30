@@ -13,6 +13,7 @@ import androidx.fragment.app.DialogFragment
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import hu.bme.aut.android.recipes.Model.Recipe
+import hu.bme.aut.android.recipes.RecipeApplication.Companion.fullList
 import hu.bme.aut.android.recipes.databinding.DialogAddNewRecipeBinding
 
 class AddNewRecipeDialog : DialogFragment(), AdapterView.OnItemSelectedListener {
@@ -30,6 +31,7 @@ class AddNewRecipeDialog : DialogFragment(), AdapterView.OnItemSelectedListener 
             if (validateForm()) {
                 val recipe = Recipe(binding.editTextRecipeTitle.text.toString(), binding.editTextRecipeCategory.text.toString(), false, "aaa", "add date..")
                 addRecipeListener.onNewRecipe(recipe)
+
                 uploadRecipe(recipe)
             }
             dismiss()
@@ -94,10 +96,10 @@ class AddNewRecipeDialog : DialogFragment(), AdapterView.OnItemSelectedListener 
 
         val db = Firebase.firestore
 
-        db.collection("recipes")
-                .add(newRecipe)
+        db.collection("recipes").document(newRecipe.title.toString())
+                .set(newRecipe)
                 .addOnSuccessListener {
-                    Toast.makeText(activity, "recipe created", LENGTH_LONG).show()
+                   // Toast.makeText(activity, "recipe created", LENGTH_LONG).show()
                   }
                 .addOnFailureListener { e -> Toast.makeText(activity, e.toString(), Toast.LENGTH_SHORT).show() }
     }

@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
@@ -92,7 +93,7 @@ class RvAdapter(private val fragmentManager: FragmentManager, private  val activ
     override fun getItemCount() = recipesList.size
 
     fun addAll(category: String){
-
+        Log.i("number", fullList.size.toString())
         if(category.isEmpty()) {
             recipesList.clear()
             notifyDataSetChanged()

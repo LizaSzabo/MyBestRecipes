@@ -17,6 +17,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import hu.bme.aut.android.recipes.Model.Recipe
+import hu.bme.aut.android.recipes.RecipeApplication.Companion.fullList
 import hu.bme.aut.android.recipes.databinding.FragmentRecipesBinding
 
 class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipeDialog.EditRecipeListener, AddNewRecipeDialog.AddRecipeListener, DatePickerDialogFragment.OnDateSelectedListener  {
@@ -33,7 +34,7 @@ class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipe
         }
 
         fragmentBinding.editTextSearch.doOnTextChanged { _, _, _, _ -> adapter.addAll(fragmentBinding.editTextSearch.text.toString())  }
-
+        fullList.clear()
         initRecipesListener()
         return fragmentBinding.root
     }
@@ -47,14 +48,15 @@ class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipe
                     return@addSnapshotListener
                 }
 
+
                 for (dc in snapshots!!.documentChanges) {
                     when (dc.type) {
                         DocumentChange.Type.ADDED -> {
                             adapter.addRecipe(dc.document.toObject())
                             RecipeApplication.fullList.add(dc.document.toObject())
                         }
-                        DocumentChange.Type.MODIFIED -> Toast.makeText(activity, dc.document.data.toString(), Toast.LENGTH_SHORT).show()
-                        DocumentChange.Type.REMOVED -> Toast.makeText(activity, dc.document.data.toString(), Toast.LENGTH_SHORT).show()
+                        DocumentChange.Type.MODIFIED -> {}
+                        DocumentChange.Type.REMOVED ->{}
                     }
                 }
             }
@@ -90,7 +92,10 @@ class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipe
         }
         popup.setOnMenuItemClickListener { item ->
             when (item.itemId) {
-                R.id.delete -> adapter.deleteRecipe(pos)
+                R.id.delete -> {
+                    removeRecipe(recipe)
+                    adapter.deleteRecipe(pos)
+                }
                 R.id.edit -> {
                     val recipeDialog = EditRecipeDialog(pos, recipe)
                     recipeDialog.listener = this
@@ -108,7 +113,7 @@ class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipe
     }
 
     override fun onNewRecipe(recipe: Recipe) {
-       adapter.addRecipe(recipe)
+    //   adapter.addRecipe(recipe)
     }
 
     override fun onDateSelected(year: Int, month: Int, day: Int, item: Recipe?) {
@@ -133,5 +138,16 @@ class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipe
                 return
             }
         }
+    }
+
+    private fun removeRecipe(recipe: Recipe) {
+
+        val db = Firebase.firestore
+
+        db.collection("recipes").document(recipe.title.toString()).delete()
+                .addOnSuccessListener {
+                    // Toast.makeText(activity, "recipe created", LENGTH_LONG).show()
+                }
+                .addOnFailureListener { e -> Toast.makeText(activity, e.toString(), Toast.LENGTH_SHORT).show() }
     }
 }
