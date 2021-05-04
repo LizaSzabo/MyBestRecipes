@@ -28,7 +28,7 @@ class RvAdapter(private val fragmentManager: FragmentManager, private  val activ
      var itemClickListener: RecipeItemClickListener? = null
      val dateListener : DatePickerDialogFragment.OnDateSelectedListener = this
 
-    private val recipesList = mutableListOf<Recipe?>()
+     val recipesList = mutableListOf<Recipe?>()
 
     inner class RecipeViewHolder( binding: RecipeItemBinding) : RecyclerView.ViewHolder(binding.root){
         val titleTextView: TextView = binding.tvRecipeTitle
@@ -125,6 +125,7 @@ class RvAdapter(private val fragmentManager: FragmentManager, private  val activ
 
 
     fun deleteRecipe(pos: Int){
+        fullList.remove(recipesList[pos])
         recipesList.removeAt(pos)
         notifyDataSetChanged()
     }

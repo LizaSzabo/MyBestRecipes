@@ -167,6 +167,8 @@ class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipe
             findNavController().navigate(action)
             FirebaseAuth.getInstance().signOut()
         } else if (item.itemId == R.id.Favourites) {
+            val action = RecipesFragmentDirections.actionRecipesFragmentToFavouritesFragment()
+            findNavController().navigate(action)
 
         }
         return super.onOptionsItemSelected(item)
