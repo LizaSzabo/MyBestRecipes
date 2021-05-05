@@ -21,19 +21,19 @@
         android:id="@+id/tvContent"
         android:layout_width="380dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/recipe_content_background"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvRecipeTitleDetail"
-        android:background="@drawable/recipe_content_background"
         android:paddingStart="15dp"
-        android:paddingEnd="15dp"
         android:paddingTop="15dp"
+        android:paddingEnd="15dp"
         android:paddingBottom="50dp"
-        android:textSize="18sp"/>
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvRecipeTitleDetail" />
 
     <Button
         android:id="@+id/btnSave"
@@ -43,5 +43,15 @@
         android:layout_marginBottom="3dp"
         android:background="@drawable/ic_baseline_save_24"
         app:layout_constraintBottom_toBottomOf="@+id/tvContent"
+        app:layout_constraintEnd_toEndOf="@+id/tvContent" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="More recipes"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/tvContent"
         app:layout_constraintEnd_toEndOf="@+id/tvContent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

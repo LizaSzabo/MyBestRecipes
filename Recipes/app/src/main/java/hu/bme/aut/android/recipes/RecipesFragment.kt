@@ -112,6 +112,12 @@ class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipe
         popup.show()
     }
 
+    override fun onStarClicked(pos: Int, recipe: Recipe, oldRecipe: Recipe) {
+        fullList.add(pos, recipe)
+        val action = RecipesFragmentDirections.actionRecipesFragmentSelf()
+        findNavController().navigate(action)
+    }
+
     override fun onRecipeEdited(recipe: Recipe, pos: Int) {
         adapter.editRecipe(recipe, pos)
     }
@@ -167,6 +173,8 @@ class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipe
             findNavController().navigate(action)
             FirebaseAuth.getInstance().signOut()
         } else if (item.itemId == R.id.Favourites) {
+           /* var action = RecipesFragmentDirections.actionRecipesFragmentSelf()
+            findNavController().navigate(action)*/
             val action = RecipesFragmentDirections.actionRecipesFragmentToFavouritesFragment()
             findNavController().navigate(action)
 

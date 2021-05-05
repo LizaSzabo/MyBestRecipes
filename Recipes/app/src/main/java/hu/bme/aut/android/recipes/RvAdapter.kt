@@ -52,6 +52,7 @@ class RvAdapter(private val fragmentManager: FragmentManager, private  val activ
             }
 
             favouriteImageView.setOnClickListener{
+                val oldRecipe = recipe
                 when(recipe?.favourite){
                     false-> {
                         favouriteImageView.setImageResource(R.drawable.ic_baseline_star_rate_24)
@@ -65,6 +66,7 @@ class RvAdapter(private val fragmentManager: FragmentManager, private  val activ
                     }
 
                 }
+                recipe?.let { it1 -> oldRecipe?.let { it2 -> itemClickListener?.onStarClicked(adapterPosition, it1, it2) } }
 
 
             }
@@ -81,6 +83,7 @@ class RvAdapter(private val fragmentManager: FragmentManager, private  val activ
     interface RecipeItemClickListener{
         fun onItemClick(recipe: Recipe, pos: Int)
         fun onItemLongClick(pos: Int, view: View, recipe: Recipe)
+        fun onStarClicked(pos: Int, recipe: Recipe, oldRecipe: Recipe)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder =
@@ -123,7 +126,6 @@ class RvAdapter(private val fragmentManager: FragmentManager, private  val activ
     }
 
 
-
     fun deleteRecipe(pos: Int){
         fullList.remove(recipesList[pos])
         recipesList.removeAt(pos)
@@ -131,6 +133,9 @@ class RvAdapter(private val fragmentManager: FragmentManager, private  val activ
     }
 
     fun editRecipe(recipe: Recipe, pos: Int){
+        val oldrecipe =  recipesList[pos]
+        val position = fullList.indexOf(oldrecipe)
+        fullList[position] = recipe
         recipesList[pos] = recipe
         notifyDataSetChanged()
     }
