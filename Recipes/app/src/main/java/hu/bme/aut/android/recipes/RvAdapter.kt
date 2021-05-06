@@ -165,6 +165,9 @@ class RvAdapter(private val fragmentManager: FragmentManager, private  val activ
        val recipe = item?.let { Recipe(item.id, item.title, item.category, item.favourite, it.content, dataAsString) }
 
        if (recipe != null) {
+           val oldrecipe =  recipesList[pos]
+           val position = fullList.indexOf(oldrecipe)
+           fullList[position] = recipe
            recipesList[pos] = recipe
        }
         notifyDataSetChanged()

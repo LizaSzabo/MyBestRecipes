@@ -62,10 +62,18 @@
             app:argType="string" />
         <argument android:name="pos"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_detailsFragment_to_networkSearch"
+            app:destination="@id/networkSearch" />
 
     </fragment>
     <fragment
         android:id="@+id/favouritesFragment"
         android:name="hu.bme.aut.android.recipes.FavouritesFragment"
         android:label="FavouritesFragment" />
+    <fragment
+        android:id="@+id/networkSearch"
+        android:name="hu.bme.aut.android.recipes.NetworkSearch"
+        android:label="fragment_network_search"
+        tools:layout="@layout/fragment_network_search" />
 </navigation>
