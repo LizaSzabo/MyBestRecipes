@@ -31,7 +31,7 @@ class AddNewRecipeDialog : DialogFragment(), AdapterView.OnItemSelectedListener 
         binding.btnSave.setOnClickListener{
             if (validateForm()) {
                 val id = Random().nextInt(2000000000).toString()
-                val recipe = Recipe(id, binding.editTextRecipeTitle.text.toString(), binding.editTextRecipeCategory.text.toString(), true, "aaa", "add date..")
+                val recipe = Recipe(id, binding.editTextRecipeTitle.text.toString(), binding.editTextRecipeCategory.text.toString(), false, "add recipe content..", "add date..")
                 addRecipeListener.onNewRecipe(recipe)
 
                 uploadRecipe(recipe)

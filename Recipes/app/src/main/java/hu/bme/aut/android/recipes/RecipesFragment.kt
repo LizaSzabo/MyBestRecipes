@@ -56,7 +56,7 @@ class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipe
                         when (dc.type) {
                             DocumentChange.Type.ADDED -> {
                                 adapter.addRecipe(dc.document.toObject())
-                                RecipeApplication.fullList.add(dc.document.toObject())
+                                fullList.add(dc.document.toObject())
                             }
                             DocumentChange.Type.MODIFIED -> {
                             }
@@ -113,9 +113,10 @@ class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipe
     }
 
     override fun onStarClicked(pos: Int, recipe: Recipe, oldRecipe: Recipe) {
-        fullList.add(pos, recipe)
-        val action = RecipesFragmentDirections.actionRecipesFragmentSelf()
-        findNavController().navigate(action)
+       // fullList.add(pos, recipe)
+        /*val action = RecipesFragmentDirections.actionRecipesFragmentSelf()
+        findNavController().navigate(action)*/
+        setupRecyclerView()
     }
 
     override fun onRecipeEdited(recipe: Recipe, pos: Int) {
@@ -123,7 +124,7 @@ class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipe
     }
 
     override fun onNewRecipe(recipe: Recipe) {
-        //   adapter.addRecipe(recipe)
+        setupRecyclerView()
     }
 
     override fun onDateSelected(year: Int, month: Int, day: Int, item: Recipe?) {

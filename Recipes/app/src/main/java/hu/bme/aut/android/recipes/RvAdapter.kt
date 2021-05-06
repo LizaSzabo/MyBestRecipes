@@ -141,6 +141,7 @@ class RvAdapter(private val fragmentManager: FragmentManager, private  val activ
     }
 
     fun addRecipe(newRecipe: Recipe?){
+        if(recipesList.contains(newRecipe)) return
         recipesList.add(newRecipe)
         newRecipe?.title?.let { Log.i("add", it) }
         notifyItemChanged(recipesList.size)
