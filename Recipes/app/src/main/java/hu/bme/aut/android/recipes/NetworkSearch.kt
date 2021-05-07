@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.datatransport.runtime.dagger.Component
+import hu.bme.aut.android.recipes.RecipeApplication.Companion.random
 import hu.bme.aut.android.recipes.network.RecipeAPI
 import hu.bme.aut.android.recipes.databinding.FragmentNetworkSearchBinding
 import hu.bme.aut.android.recipes.networkData.*
@@ -15,6 +16,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.util.*
 
 
 class NetworkSearch : Fragment() {
@@ -33,6 +35,7 @@ class NetworkSearch : Fragment() {
         fragmentBinding.btnSearch.setOnClickListener{
             fragmentBinding.searchedRecipeContent.setText("Recipe loading..")
             getData(recipeAPI)
+            random = Random().nextInt(1199999).toString()
         }
 
         return fragmentBinding.root
@@ -41,7 +44,7 @@ class NetworkSearch : Fragment() {
 
     private fun getData( recipeAPI: RecipeAPI ){
 
-        val recipeCall = recipeAPI.getRecipe()
+        val recipeCall = recipeAPI.getRecipe(random)
 
         recipeCall.enqueue(object : Callback<Base> {
 
@@ -60,7 +63,7 @@ class NetworkSearch : Fragment() {
 
                 val ingredientsList: List<ExtendedIngredients1847277050>? = recipeResult?.extendedIngredients
                 if (ingredientsList != null) {
-                    for(index in 0 until ingredientsList.size){
+                    for(index in ingredientsList.indices){
                         fragmentBinding.searchedRecipeContent.append(ingredientsList[index].name)
                         fragmentBinding.searchedRecipeContent.append("  ")
                         fragmentBinding.searchedRecipeContent.append(ingredientsList[index].amount.toString())
@@ -74,9 +77,10 @@ class NetworkSearch : Fragment() {
                 fragmentBinding.searchedRecipeContent.append("Steps:")
                 fragmentBinding.searchedRecipeContent.append("\n")
                 val instructions: List<AnalyzedInstructions1289973165>? = recipeResult?.analyzedInstructions
-                val steps :  List<Steps389317355>? = instructions?.get(0)?.steps
+                var steps :  List<Steps389317355>? = null
+                if(instructions != null && instructions.isNotEmpty())
                 if (steps != null) {
-                    for(index in 0 until steps.size){
+                    for(index in steps.indices){
                         fragmentBinding.searchedRecipeContent.append(steps[index].number.toString())
                         fragmentBinding.searchedRecipeContent.append(". ")
                         fragmentBinding.searchedRecipeContent.append(steps[index].step)

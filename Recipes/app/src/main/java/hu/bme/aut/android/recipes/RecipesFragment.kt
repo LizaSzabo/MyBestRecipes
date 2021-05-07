@@ -169,16 +169,22 @@ class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipe
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.LogOut) {
-            val action = RecipesFragmentDirections.actionRecipesFragmentToLoginFragment()
-            findNavController().navigate(action)
-            FirebaseAuth.getInstance().signOut()
-        } else if (item.itemId == R.id.Favourites) {
-           /* var action = RecipesFragmentDirections.actionRecipesFragmentSelf()
-            findNavController().navigate(action)*/
-            val action = RecipesFragmentDirections.actionRecipesFragmentToFavouritesFragment()
-            findNavController().navigate(action)
-
+        when (item.itemId) {
+            R.id.LogOut -> {
+                val action = RecipesFragmentDirections.actionRecipesFragmentToLoginFragment()
+                findNavController().navigate(action)
+                FirebaseAuth.getInstance().signOut()
+            }
+            R.id.Favourites -> {
+                /* var action = RecipesFragmentDirections.actionRecipesFragmentSelf()
+               findNavController().navigate(action)*/
+                val action = RecipesFragmentDirections.actionRecipesFragmentToFavouritesFragment()
+                findNavController().navigate(action)
+            }
+            R.id.searchRecipe -> {
+                val action = RecipesFragmentDirections.actionRecipesFragmentToNetworkSearch3()
+                findNavController().navigate(action)
+            }
         }
         return super.onOptionsItemSelected(item)
 

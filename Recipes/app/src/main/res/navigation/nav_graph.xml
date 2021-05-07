@@ -43,6 +43,9 @@
         <action
             android:id="@+id/action_recipesFragment_self"
             app:destination="@id/recipesFragment" />
+        <action
+            android:id="@+id/action_recipesFragment_to_networkSearch3"
+            app:destination="@id/networkSearch" />
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
