@@ -1,5 +1,7 @@
 package hu.bme.aut.android.recipes
 
+import android.app.SearchManager
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -34,7 +36,7 @@ class DetailsFragment : Fragment(){
         }
 
         fragmentBinding.btnNetwork.setOnClickListener{
-            navigateToNetworkSearch()
+            intentSearch()
         }
 
         return fragmentBinding.root
@@ -45,9 +47,10 @@ class DetailsFragment : Fragment(){
         db.collection("recipes").document(recipe?.id.toString()).update( "content", recipe?.content)
     }
 
-    private fun navigateToNetworkSearch(){
-        val action = DetailsFragmentDirections.actionDetailsFragmentToNetworkSearch()
-        findNavController().navigate(action)
+    private fun  intentSearch(){
+        val intentSearch = Intent(Intent.ACTION_WEB_SEARCH)
+        intentSearch.putExtra(SearchManager.QUERY, fragmentBinding.tvRecipeTitleDetail.text.toString())
+        startActivity(intentSearch)
     }
 
 }
