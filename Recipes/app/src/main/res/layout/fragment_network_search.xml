@@ -14,26 +14,26 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:text="Recommended recipe"
-        android:textSize="32sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <EditText
         android:id="@+id/searchedRecipeContent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="15dp"
-        android:maxHeight="480dp"
-        android:overScrollMode="always"
-        android:paddingStart="10dp"
-        android:paddingTop="5dp"
+        android:maxHeight="400dp"
+        android:paddingStart="15dp"
+        android:paddingTop="10dp"
         android:paddingEnd="10dp"
         android:paddingBottom="10dp"
-        android:scrollbarStyle="insideInset"
         android:scrollbars="vertical"
+        android:scrollbarStyle="insideInset"
+        android:overScrollMode="always"
         android:text="No content"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,6 +49,19 @@
         android:background="@drawable/search_button_background"
         android:text="Search"
         app:layout_constraintStart_toStartOf="@+id/searchedRecipeContent"
+        app:layout_constraintTop_toBottomOf="@+id/searchedRecipeTitle" />
+
+    <TextView
+        android:id="@+id/searchedRecipeTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="30dp"
+        android:textColor="#A52240"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SearchTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
