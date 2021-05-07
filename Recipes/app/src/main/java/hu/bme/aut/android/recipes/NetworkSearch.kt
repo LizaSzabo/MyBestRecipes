@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.datatransport.runtime.dagger.Component
 import hu.bme.aut.android.recipes.network.RecipeAPI
 import hu.bme.aut.android.recipes.databinding.FragmentNetworkSearchBinding
 import hu.bme.aut.android.recipes.networkData.Base
@@ -23,7 +24,7 @@ class NetworkSearch : Fragment() {
         fragmentBinding = FragmentNetworkSearchBinding.inflate(inflater, container, false)
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.spoonacular.com/recipes/")
+            .baseUrl("https://api.spoonacular.com/")
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
 
@@ -36,7 +37,9 @@ class NetworkSearch : Fragment() {
         return fragmentBinding.root
     }
 
+
     private fun getData( recipeAPI: RecipeAPI ){
+
         val recipeCall = recipeAPI.getRecipe()
 
         recipeCall.enqueue(object : Callback<List<Base>> {
@@ -46,11 +49,11 @@ class NetworkSearch : Fragment() {
                 fragmentBinding.searchedRecipeContent.text = t.message
             }
 
-            @SuppressLint("SetTextI18n")
+
             override fun onResponse(call: Call<List<Base>>, response: Response<List<Base>>) {
                 val recipeResult = response.body()
 
-                fragmentBinding.searchedRecipeContent.text = ": ${recipeResult?.get(1)?.name}"
+                fragmentBinding.searchedRecipeContent.text = "${recipeResult?.get(0)?.title}"
             }
         })
     }
