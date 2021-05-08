@@ -4,9 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import android.widget.Toast.LENGTH_LONG
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
@@ -36,12 +33,10 @@ class RegisterFragment: BaseActivity() {
         if (!validateForm()) {
             return
         }
-     //   showProgressDialog()
 
         firebaseAuth
                 .createUserWithEmailAndPassword(fragmentBinding.editTextTextEmailAddress.text.toString(), fragmentBinding.editTextTextPassword.text.toString())
                 .addOnSuccessListener { result ->
-                   // hideProgressDialog()
 
                     val firebaseUser = result.user
                     val profileChangeRequest = UserProfileChangeRequest.Builder()
@@ -53,8 +48,6 @@ class RegisterFragment: BaseActivity() {
                     navigateToLogin()
                 }
                 .addOnFailureListener { exception ->
-                  //  hideProgressDialog()
-
                     toast(exception.message)
                 }
     }

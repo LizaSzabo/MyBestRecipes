@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
@@ -28,7 +27,7 @@ class RvAdapter(private val fragmentManager: FragmentManager, private  val activ
      var itemClickListener: RecipeItemClickListener? = null
      val dateListener : DatePickerDialogFragment.OnDateSelectedListener = this
 
-     val recipesList = mutableListOf<Recipe?>()
+     private val recipesList = mutableListOf<Recipe?>()
 
     inner class RecipeViewHolder( binding: RecipeItemBinding) : RecyclerView.ViewHolder(binding.root){
         val titleTextView: TextView = binding.tvRecipeTitle
@@ -133,8 +132,8 @@ class RvAdapter(private val fragmentManager: FragmentManager, private  val activ
     }
 
     fun editRecipe(recipe: Recipe, pos: Int){
-        val oldrecipe =  recipesList[pos]
-        val position = fullList.indexOf(oldrecipe)
+        val oldRecipe =  recipesList[pos]
+        val position = fullList.indexOf(oldRecipe)
         fullList[position] = recipe
         recipesList[pos] = recipe
         notifyDataSetChanged()
@@ -165,8 +164,8 @@ class RvAdapter(private val fragmentManager: FragmentManager, private  val activ
        val recipe = item?.let { Recipe(item.id, item.title, item.category, item.favourite, it.content, dataAsString) }
 
        if (recipe != null) {
-           val oldrecipe =  recipesList[pos]
-           val position = fullList.indexOf(oldrecipe)
+           val oldRecipe =  recipesList[pos]
+           val position = fullList.indexOf(oldRecipe)
            fullList[position] = recipe
            recipesList[pos] = recipe
        }
@@ -183,7 +182,7 @@ class RvAdapter(private val fragmentManager: FragmentManager, private  val activ
             values.put(CalendarContract.Events.DTSTART, date.timeInMillis)
             values.put(CalendarContract.Events.DTEND, date.timeInMillis)
             values.put(CalendarContract.Events.TITLE, item?.title)
-            values.put(CalendarContract.Events.DESCRIPTION, "Tárgy: ${item?.title}")
+            values.put(CalendarContract.Events.DESCRIPTION, "${item?.title}")
             values.put(CalendarContract.Events.CALENDAR_ID, 1)
             values.put(
                     CalendarContract.Events.EVENT_TIMEZONE,

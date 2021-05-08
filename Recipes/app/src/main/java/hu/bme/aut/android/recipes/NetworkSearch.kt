@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.android.datatransport.runtime.dagger.Component
 import hu.bme.aut.android.recipes.RecipeApplication.Companion.random
 import hu.bme.aut.android.recipes.network.RecipeAPI
 import hu.bme.aut.android.recipes.databinding.FragmentNetworkSearchBinding
@@ -33,7 +32,7 @@ class NetworkSearch : Fragment() {
         val recipeAPI = retrofit.create(RecipeAPI::class.java)
 
         fragmentBinding.btnSearch.setOnClickListener{
-            fragmentBinding.searchedRecipeContent.setText("Recipe loading..")
+            fragmentBinding.searchedRecipeContent.setText(getString(R.string.recipe_loading))
             getData(recipeAPI)
             random = Random().nextInt(1199999).toString()
         }
@@ -77,8 +76,7 @@ class NetworkSearch : Fragment() {
                 fragmentBinding.searchedRecipeContent.append("Steps:")
                 fragmentBinding.searchedRecipeContent.append("\n")
                 val instructions: List<AnalyzedInstructions1289973165>? = recipeResult?.analyzedInstructions
-                var steps :  List<Steps389317355>? = null
-                if(instructions != null && instructions.isNotEmpty())
+                val steps :  List<Steps389317355>? = instructions?.get(0)?.steps
                 if (steps != null) {
                     for(index in steps.indices){
                         fragmentBinding.searchedRecipeContent.append(steps[index].number.toString())

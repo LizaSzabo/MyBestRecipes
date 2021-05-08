@@ -1,11 +1,9 @@
 package hu.bme.aut.android.recipes
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import hu.bme.aut.android.recipes.databinding.FragmentLoginBinding
@@ -39,19 +37,12 @@ class LoginFragment: BaseActivity() {
             return
         }
 
-      //  showProgressDialog()
-
         firebaseAuth
             .signInWithEmailAndPassword(fragmentBinding.editTextTextEmailAddress.text.toString(), fragmentBinding.editTextTextPassword.text.toString())
             .addOnSuccessListener {
-             //   hideProgressDialog()
-
                 navigateToRecipes()
-               // finish()
             }
             .addOnFailureListener { exception ->
-               // hideProgressDialog()
-
                 toast(exception.localizedMessage)
             }
     }

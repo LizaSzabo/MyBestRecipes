@@ -1,8 +1,7 @@
 package hu.bme.aut.android.recipes
 
-import android.util.Log
+
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -37,7 +36,8 @@ class FavouritesRvAdapter: RecyclerView.Adapter<FavouritesRvAdapter.FavouriteRec
                     false-> {
                         favouriteImageView.setImageResource(R.drawable.ic_baseline_star_rate_24)
                         recipe?.favourite = true
-                        //updateFavourite(recipe, true)
+                        notifyDataSetChanged()
+                        updateFavourite(recipe, true)
                     }
                     true ->{
                         favouriteImageView.setImageResource(R.drawable.ic_baseline_star_border_24)

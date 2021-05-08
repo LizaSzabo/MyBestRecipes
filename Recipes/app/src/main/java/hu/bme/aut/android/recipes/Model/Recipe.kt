@@ -1,6 +1,5 @@
 package hu.bme.aut.android.recipes.Model
 
-import java.util.*
 
 data class Recipe (
         var id: String? = null,

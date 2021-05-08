@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -18,7 +17,7 @@ import hu.bme.aut.android.recipes.databinding.FragmentDetailsBinding
 
 class DetailsFragment : Fragment(){
     private lateinit var fragmentBinding: FragmentDetailsBinding
-    val args: DetailsFragmentArgs by navArgs()
+    private val args: DetailsFragmentArgs by navArgs()
     private lateinit var adapter : RvAdapter
 
 
