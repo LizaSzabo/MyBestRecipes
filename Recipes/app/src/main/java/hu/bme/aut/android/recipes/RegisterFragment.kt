@@ -54,20 +54,20 @@ class RegisterFragment: BaseActivity() {
 
 
     private fun validateForm(): Boolean {
-        if (fragmentBinding.editTextTextEmailAddress.text.isEmpty()) {
+        if (fragmentBinding.editTextTextEmailAddress.text.toString().isEmpty()) {
             fragmentBinding.editTextTextEmailAddress.error = "Required"
             return false
         }
-        if (fragmentBinding.editTextTextPassword.text.isEmpty()) {
+        if (fragmentBinding.editTextTextPassword.text.toString().isEmpty()) {
             fragmentBinding.editTextTextPassword.error = "Required"
             return false
         }
-        if (fragmentBinding.editTextTextPassword2.text.isEmpty()) {
+        if (fragmentBinding.editTextTextPassword2.text.toString().isEmpty()) {
             fragmentBinding.editTextTextPassword2.error = "Required"
             return false
         }
         if (fragmentBinding.editTextTextPassword.text.toString() != fragmentBinding.editTextTextPassword2.text.toString()) {
-            fragmentBinding.editTextTextPassword.error = "Error password confirmation"
+            fragmentBinding.editTextTextPassword2.error = "Error password confirmation"
             return false
         }
         return true

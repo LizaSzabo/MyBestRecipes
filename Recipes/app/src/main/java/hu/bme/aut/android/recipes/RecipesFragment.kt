@@ -112,9 +112,6 @@ class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipe
     }
 
     override fun onStarClicked(pos: Int, recipe: Recipe, oldRecipe: Recipe) {
-       // fullList.add(pos, recipe)
-        /*val action = RecipesFragmentDirections.actionRecipesFragmentSelf()
-        findNavController().navigate(action)*/
         setupRecyclerView()
     }
 
@@ -175,8 +172,6 @@ class RecipesFragment: Fragment(), RvAdapter.RecipeItemClickListener, EditRecipe
                 FirebaseAuth.getInstance().signOut()
             }
             R.id.Favourites -> {
-                /* var action = RecipesFragmentDirections.actionRecipesFragmentSelf()
-               findNavController().navigate(action)*/
                 val action = RecipesFragmentDirections.actionRecipesFragmentToFavouritesFragment()
                 findNavController().navigate(action)
             }

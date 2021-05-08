@@ -48,11 +48,11 @@ class LoginFragment: BaseActivity() {
     }
 
     private fun validateForm(): Boolean {
-        if (fragmentBinding.editTextTextEmailAddress.text.isEmpty()) {
+        if (fragmentBinding.editTextTextEmailAddress.text.toString().isEmpty()) {
             fragmentBinding.editTextTextEmailAddress.error = "Required"
             return false
         }
-        if (fragmentBinding.editTextTextPassword.text.isEmpty()) {
+        if (fragmentBinding.editTextTextPassword.text.toString().isEmpty()) {
             fragmentBinding.editTextTextPassword.error = "Required"
             return false
         }

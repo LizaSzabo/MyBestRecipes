@@ -41,9 +41,6 @@
             android:id="@+id/action_recipesFragment_to_favouritesFragment"
             app:destination="@id/favouritesFragment" />
         <action
-            android:id="@+id/action_recipesFragment_self"
-            app:destination="@id/recipesFragment" />
-        <action
             android:id="@+id/action_recipesFragment_to_networkSearch3"
             app:destination="@id/networkSearch" />
     </fragment>
@@ -65,9 +62,6 @@
             app:argType="string" />
         <argument android:name="pos"
             app:argType="integer" />
-        <action
-            android:id="@+id/action_detailsFragment_to_networkSearch"
-            app:destination="@id/networkSearch" />
 
     </fragment>
     <fragment

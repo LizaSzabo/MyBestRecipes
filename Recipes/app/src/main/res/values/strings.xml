@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Recipes</string>
-    <string name="favourites">Favourites</string>
 
     <string-array name="categories">
         <item>Breakfast</item>
@@ -21,7 +20,35 @@
         <item>Holidays</item>
         <item>Entertaining</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="recipe_loading">Recipe loading..</string>
+    <string name="user_email">User Email:</string>
+    <string name="register">Register</string>
+    <string name="password">Password:</string>
+    <string name="register_for_button">REGISTER</string>
+    <string name="confirm_password">Confirm Password:</string>
+    <string name="login">Login</string>
+    <string name="login_for_button">LOGIN</string>
+    <string name="no_content_search_recipe">No content, search recipe!</string>
+    <string name="search">Search</string>
+    <string name="recommended_recipe">Recommended recipe</string>
+    <string name="search_recipe_by_category">Search Recipe by Category</string>
+    <string name="new_recipe">New Recipe</string>
+    <string name="categoryof">CategoryOf</string>
+    <string name="date">Date</string>
+    <string name="favourite_star">Favourite star</string>
+    <string name="more_recipes">More recipes</string>
+    <string name="edit_recipe">Edit Recipe</string>
+    <string name="edit_recipe_title">Edit Recipe Title</string>
+    <string name="edit_recipe_category">Edit Recipe Category</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="add_new_recipe">Add New Recipe</string>
+    <string name="recipe_title">Recipe Title</string>
+    <string name="recipe_category">Recipe Category</string>
+    <string name="edit">EDIT</string>
+    <string name="delete">DELETE</string>
+    <string name="favourites">Favourites</string>
+    <string name="search_recipe">Search Recipe</string>
+    <string name="logout">LogOut</string>
 </resources>

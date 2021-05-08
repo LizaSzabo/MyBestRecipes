@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Recommended recipe"
+        android:text="@string/recommended_recipe"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +34,7 @@
         android:scrollbars="vertical"
         android:scrollbarStyle="insideInset"
         android:overScrollMode="always"
-        android:text="No content"
+        android:hint="@string/no_content_search_recipe"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:background="@drawable/search_button_background"
-        android:text="Search"
+        android:text="@string/search"
         app:layout_constraintStart_toStartOf="@+id/searchedRecipeContent"
         app:layout_constraintTop_toBottomOf="@+id/searchedRecipeTitle" />
 
